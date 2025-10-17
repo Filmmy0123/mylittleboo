@@ -93,7 +93,16 @@
 
   <footer>
     © 2025 SweetCMU - สดชื่นทุกวันสำหรับนักศึกษาเชียงใหม่
-  </footer>
+  </footer>\
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'http://localhost:5678/webhook/66fc5433-3c6e-44ae-a17f-23a46e07be85/chat'
+	});
+</script>
+
 
 </body>
 </html>
