@@ -99,7 +99,28 @@
 	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
 	createChat({
-		webhookUrl: 'https://pitchayatida.app.n8n.cloud/webhook/57244116-eda6-4744-a77c-ee7a6407f987/chat'
+		webhookUrl: 'https://pitchayatida.app.n8n.cloud/webhook/57244116-eda6-4744-a77c-ee7a6407f987/chat',
+		defaultLanguage: 'th',
+		initialMessages: [
+		'สวัสดีค่ะ!👋',
+		'ฉันชื่อ อลิสสา. วันนี้อยากให้ช่วยอะไรไหมคะ?'
+	],
+		i18n: {
+		en: {
+			title: 'Hi there! 👋',
+			subtitle: "Start a chat. We're here to help you 24/7.",
+			footer: '',
+			getStarted: 'New Conversation',
+			inputPlaceholder: 'Type your question..',
+		},
+		th: {
+			title: 'Hi there! 👋',
+			subtitle: "เริ่มการสนทนา. อลิสสาพร้อมที่จะช่วยคุณตลอดเวลา!.",
+			footer: '',
+			getStarted: 'เริ่มการสนทนาใหม่',
+			inputPlaceholder: 'พิมพ์คำถามของคุณ..',
+		}
+	}
 	});
 </script>
 
