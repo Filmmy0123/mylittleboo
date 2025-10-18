@@ -3,97 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SweetCMU - น้ำหวานสดชื่นสำหรับนักศึกษา</title>
+  <title>ผลิตภัณฑ์เครื่องดูดฝุ่น - ช่วยอำนวยความสะดวกในบ้านของคุณ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Noto Sans Thai', sans-serif;
       margin: 0;
       padding: 0;
-      background: #fefefe;
+      /* พื้นหลังใหม่: ขาว-เหลืองอ่อน-น้ำตาลอ่อน */
+      background: linear-gradient(to bottom, #ffffff, #fff8e1, #f5f5dc);
       color: #333;
+      line-height: 1.6;
     }
     header {
-      background-color: #ff69b4;
-      padding: 20px 0;
+      background-color: #8B4513;
+      background-image: linear-gradient(135deg, #A0522D, #8B4513);
+      padding: 40px 20px;
       text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     header img {
-      width: 120px;
+      width: 150px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     h1 {
-      margin: 10px 0 0;
-      font-size: 24px;
+      margin: 15px 0 5px;
+      font-size: 32px;
       color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
     .tagline {
-      font-size: 18px;
+      font-size: 20px;
       color: white;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-weight: 400;
     }
     .products {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 20px;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      gap: 30px;
     }
     .product {
-      background: #fff0f5;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 250px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(139,69,19,0.1);
       text-align: center;
-      padding: 15px;
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(139,69,19,0.15);
+    }
+    .product-image-container {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      background: #fff8e1;
+      position: relative;
     }
     .product img {
       width: 100%;
-      border-radius: 10px;
+      height: 100%;
+      object-fit: contain;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+    .product img:hover {
+      transform: scale(1.05);
+    }
+    /* รูป placeholder เมื่อไม่มีรูป */
+    .product-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fff8e1, #f5f5dc);
+      border: 2px dashed #D2691E;
+      color: #D2691E;
+      font-size: 14px;
+      text-align: center;
+    }
+    .product-image-placeholder::before {
+      content: "🧹 อัพโหลดรูป";
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    .product-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .product h2 {
-      font-size: 20px;
-      margin: 10px 0 5px;
+      font-size: 22px;
+      margin: 0 0 10px;
+      color: #8B4513;
     }
     .product p {
-      font-size: 16px;
-      margin: 5px 0;
+      font-size: 18px;
+      margin: 0;
+      color: #D2691E;
+      font-weight: 600;
     }
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ff69b4;
+      padding: 20px;
+      background-color: #8B4513;
+      background-image: linear-gradient(135deg, #A0522D, #8B4513);
       color: white;
+      font-size: 14px;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Modal Popup Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(139,69,19,0.9);
+      animation: fadeIn 0.3s ease;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      animation: zoomIn 0.3s ease;
+    }
+    .close {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+      background: rgba(210,105,30,0.8);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+    .close:hover {
+      background: #D2691E;
+      color: white;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes zoomIn {
+      from {transform: scale(0.5);}
+      to {transform: scale(1);}
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 30px 15px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .tagline {
+        font-size: 18px;
+      }
+      .products {
+        padding: 30px 15px;
+        gap: 20px;
+      }
+      .product {
+        padding: 15px;
+      }
+      .product-image-container {
+        height: 180px;
+      }
+      .close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="โลโก้ SweetCMU">
-    <h1>SweetCMU</h1>
-    <div class="tagline">น้ำหวานสดชื่น เติมพลังให้ชีวิตนักศึกษา!</div>
+    <img src="logo.png" alt="โลโก้ ผลิตภัณฑ์เครื่องดูดฝุ่น">
+    <h1>ผลิตภัณฑ์เครื่องดูดฝุ่น</h1>
+    <div class="tagline">เครื่องดูดฝุ่นช่วยอำนวยความสะดวกในบ้านของคุณ!</div>
   </header>
 
   <section class="products">
     <div class="product">
-      <img src="drink1.jpg" alt="น้ำหวานสตรอเบอร์รี่">
-      <h2>สตรอเบอร์รี่ปั่น</h2>
-      <p>ราคา: 45 บาท</p>
+      <div class="product-image-container">
+        <img src="Dyson.jpg" alt="Dyson V15s Detect Submarine™ Absolute่" 
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" 
+             onclick="openModal('Dyson.jpg')">
+        <div class="product-image-placeholder"></div>
+      </div>
+      <div class="product-content">
+        <h2>Dyson V15s Detect Submarine™ Absolute </h2>
+        <p>ราคา: 38,900 บาท</p>
+      </div>
     </div>
     <div class="product">
-      <img src="drink2.jpg" alt="น้ำหวานบลูฮาวาย">
-      <h2>บลูฮาวายโซดา</h2>
-      <p>ราคา: 40 บาท</p>
+      <div class="product-image-container">
+        <img src="Samsung.jpg" alt="Samsung Bespoke Jet™ Plus Premium" 
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" 
+             onclick="openModal('Samsung.jpg')">
+        <div class="product-image-placeholder"></div>
+      </div>
+      <div class="product-content">
+        <h2>Samsung Bespoke Jet™ Plus Premium </h2>
+        <p>ราคา: 29,990 - 32,900 บาท</p>
+      </div>
     </div>
     <div class="product">
-      <img src="drink3.jpg" alt="น้ำหวานมะนาว">
-      <h2>มะนาวโซดา</h2>
-      <p>ราคา: 35 บาท</p>
+      <div class="product-image-container">
+        <img src="LG.jpg" alt="LG CordZero™ A9 Kompressor™" 
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" 
+             onclick="openModal('LG.jpg')">
+        <div class="product-image-placeholder"></div>
+      </div>
+      <div class="product-content">
+        <h2>LG CordZero™ A9 Kompressor™ </h2>
+        <p>ราคา: 28,900 - 32,900 บาท</p>
+      </div>
     </div>
   </section>
 
   <footer>
-    © 2025 SweetCMU - สดชื่นทุกวันสำหรับนักศึกษาเชียงใหม่
-  </footer>\
+    © 2025 ผลิตภัณฑ์เครื่องดูดฝุ่น - ช่วยอำนวยความสะดวกในบ้านของคุณ
+  </footer>
+
+  <!-- Modal Popup -->
+  <div id="imageModal" class="modal" onclick="closeModal(event)">
+    <span class="close" onclick="closeModal(event)">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <script type="module">
 	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
@@ -109,21 +285,47 @@
 		en: {
 			title: 'Hi there! 👋',
 			subtitle: "Start a chat. We're here to help you 24/7.",
-			footer: '',
 			getStarted: 'New Conversation',
 			inputPlaceholder: 'Type your question..',
 		},
 		th: {
 			title: 'สวัสดีค่ะ! ยินดีให้บริการค่ะ 👋',
 			subtitle: "เริ่มการสนทนา. อลิสสาพร้อมที่จะช่วยคุณตลอดเวลา!",
-			footer: '',
 			getStarted: 'เริ่มการสนทนาใหม่',
 			inputPlaceholder: 'พิมพ์คำถามของคุณ..',
 		}
 	}
 	});
-</script>
+  </script>
 
+  <script>
+    function openModal(imageSrc) {
+      const img = new Image();
+      img.onload = function() {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modal.style.display = 'flex';
+        modalImg.src = imageSrc;
+        modalImg.onclick = function(e) { e.stopPropagation(); }
+      };
+      img.onerror = function() {
+        alert('ขออภัยค่ะ รูปภาพนี้ยังไม่พร้อมแสดง\nกรุณาอัพโหลดรูปใหม่ค่ะ 🧹');
+      };
+      img.src = imageSrc;
+    }
+
+    function closeModal(event) {
+      if (event.target.classList.contains('close') || event.target.classList.contains('modal')) {
+        document.getElementById('imageModal').style.display = 'none';
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal({target: document.getElementById('imageModal')});
+      }
+    });
+  </script>
 
 </body>
 </html>
